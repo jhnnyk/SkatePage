@@ -10,7 +10,6 @@ const loadSkateparks = async () => {
     const querySnapshot = await getDocs(collection(db, 'skateparks'));
     querySnapshot.forEach((doc) => {
       skateparks.value.push({ ...doc.data(), id: doc.id });
-      // console.log(`${doc.id} => ${doc.data()}`);
     });
   } catch (err) {
     console.log(err);
@@ -21,10 +20,13 @@ loadSkateparks();
 </script>
 
 <template>
-  <main>
-    <h1 class="text-3xl font-bold underline text-sky-900">
-      Welcome to Skate.page
-    </h1>
-    {{ skateparks }}
-  </main>
+  <h1 class="text-3xl font-bold underline text-sky-900">
+    Welcome to SKATE.page
+  </h1>
+  <ul>
+    <li v-for="skatepark in skateparks" :key="skatepark.id">
+      {{ skatepark.name }}<br />
+      {{ skatepark.location }}
+    </li>
+  </ul>
 </template>
