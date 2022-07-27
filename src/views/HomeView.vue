@@ -20,9 +20,7 @@ loadSkateparks();
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline text-sky-900">
-    Welcome to SKATE.page
-  </h1>
+  <h1>Welcome to SKATE.page</h1>
   <ul>
     <li v-for="skatepark in skateparks" :key="skatepark.id">
       {{ skatepark.name }}<br />

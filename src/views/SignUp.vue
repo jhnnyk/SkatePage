@@ -27,47 +27,26 @@ const signup = () => {
 
 <template>
   <form @submit.prevent="signup">
-    <div class="py-12">
-      <h2 class="text-2xl font-bold">Sign Up</h2>
-      <div class="mt-8 max-w-md">
-        <div class="grid grid-cols-1 gap-6">
-          <label class="block">
-            <span class="text-gray-700">Name</span>
-            <input
-              v-model="name"
-              type="text"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder=""
-            />
-            {{ name }}
-          </label>
+    <h2>Sign Up</h2>
+    <label>
+      Name
+      <input v-model="name" type="text" placeholder="" />
+      {{ name }}
+    </label>
 
-          <label class="block">
-            <span class="text-gray-700">Email address</span>
-            <input
-              v-model="email"
-              type="email"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="john@example.com"
-            />
+    <label>
+      Email address
+      <input v-model="email" type="email" placeholder="john@example.com" />
 
-            {{ email }}
-          </label>
+      {{ email }}
+    </label>
 
-          <label class="block">
-            <span class="text-gray-700">Password</span>
-            <input
-              v-model="password"
-              type="password"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="password"
-            />
-            {{ password }}
-          </label>
+    <label>
+      Password
+      <input v-model="password" type="password" placeholder="password" />
+      {{ password }}
+    </label>
 
-          <button class="text-white bg-sky-900 rounded-md p-2">Sign Up</button>
-        </div>
-      </div>
-    </div>
+    <button>Sign Up</button>
   </form>
 </template>
