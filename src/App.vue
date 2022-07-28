@@ -1,13 +1,38 @@
 <script setup>
+import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+const currentUser = ref(null);
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser.value = { ...user };
+    console.log(currentUser.value);
+  } else {
+    console.log('no current user');
+  }
+});
 </script>
 
 <template>
   <header>
     <nav>
-      <RouterLink :to="{ name: 'Home' }" class="logo"> SKATE.page </RouterLink>
-      <RouterLink :to="{ name: 'Home' }"> Home </RouterLink>
-      <RouterLink :to="{ name: 'About' }"> About </RouterLink>
+      <div>
+        <RouterLink :to="{ name: 'Home' }" class="logo">
+          SKATE.page
+        </RouterLink>
+        <RouterLink :to="{ name: 'Home' }"> Home </RouterLink>
+        <RouterLink :to="{ name: 'About' }"> About </RouterLink>
+      </div>
+      <div v-if="currentUser">
+        <RouterLink to="#">{{ currentUser.email }}</RouterLink>
+        <RouterLink to="#"> Sign Out </RouterLink>
+      </div>
+      <div v-else>
+        <RouterLink to="#"> Sign In </RouterLink>
+        <RouterLink :to="{ name: 'SignUp' }"> Sign Up </RouterLink>
+      </div>
     </nav>
   </header>
 
@@ -27,6 +52,14 @@ body {
 nav {
   background: #245096;
   padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav div {
+  display: flex;
+  align-items: center;
 }
 
 nav a {
