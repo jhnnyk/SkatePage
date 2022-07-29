@@ -1,18 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const router = useRouter();
 
-const name = ref('');
 const email = ref('');
 const password = ref('');
 const auth = getAuth();
 
-const signup = () => {
-  console.log(email, password);
-  createUserWithEmailAndPassword(auth, email.value, password.value)
+const signin = () => {
+  signInWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
@@ -30,13 +28,8 @@ const signup = () => {
 </script>
 
 <template>
-  <form @submit.prevent="signup">
+  <form @submit.prevent="signin">
     <h2>Sign Up</h2>
-    <label>
-      Name
-      <input v-model="name" type="text" placeholder="" />
-      {{ name }}
-    </label>
 
     <label>
       Email address
@@ -51,6 +44,6 @@ const signup = () => {
       {{ password }}
     </label>
 
-    <button>Sign Up</button>
+    <button>Sign In</button>
   </form>
 </template>

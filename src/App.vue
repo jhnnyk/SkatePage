@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 const currentUser = ref(null);
 const auth = getAuth();
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser.value = { ...user };
@@ -13,6 +14,17 @@ onAuthStateChanged(auth, (user) => {
     console.log('no current user');
   }
 });
+
+const logout = () => {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      currentUser.value = null;
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+};
 </script>
 
 <template>
@@ -27,10 +39,10 @@ onAuthStateChanged(auth, (user) => {
       </div>
       <div v-if="currentUser">
         <RouterLink to="#">{{ currentUser.email }}</RouterLink>
-        <RouterLink to="#"> Sign Out </RouterLink>
+        <a @click="logout"> Sign Out </a>
       </div>
       <div v-else>
-        <RouterLink to="#"> Sign In </RouterLink>
+        <RouterLink :to="{ name: 'SignIn' }"> Sign In </RouterLink>
         <RouterLink :to="{ name: 'SignUp' }"> Sign Up </RouterLink>
       </div>
     </nav>
