@@ -1,31 +1,39 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
 
 const router = useRouter();
 
-const name = ref('');
+const displayName = ref('');
 const email = ref('');
 const password = ref('');
 const auth = getAuth();
 
-const signup = () => {
-  console.log(email, password);
-  createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-      console.log(user);
-      router.push({ name: 'Home' });
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      console.log(errorCode, errorMessage);
-    });
+const signup = async () => {
+  try {
+    await createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+        console.log(user);
+        router.push({ name: 'Home' });
+      })
+      .catch((err) => console.log(err));
+    await updateProfile(auth.currentUser, {
+      displayName: displayName.value,
+    }).catch((err) => console.log(err));
+  } catch (err) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    console.log(errorCode, errorMessage);
+  }
 };
 </script>
 
@@ -33,9 +41,9 @@ const signup = () => {
   <form @submit.prevent="signup">
     <h2>Sign Up</h2>
     <label>
-      Name
-      <input v-model="name" type="text" placeholder="" />
-      {{ name }}
+      Display Name
+      <input v-model="displayName" type="text" placeholder="" />
+      {{ displayName }}
     </label>
 
     <label>

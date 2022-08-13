@@ -38,7 +38,7 @@ const logout = () => {
         <RouterLink :to="{ name: 'About' }"> About </RouterLink>
       </div>
       <div v-if="currentUser">
-        <RouterLink to="#">{{ currentUser.email }}</RouterLink>
+        <RouterLink to="#">{{ currentUser.displayName }}</RouterLink>
         <a @click="logout"> Sign Out </a>
       </div>
       <div v-else>
